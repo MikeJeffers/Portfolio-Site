@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Calendar With Stuff</title>
+	<title>Filth</title>
 	{% load staticfiles %}
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -14,40 +14,20 @@
 
 {%block nav%}  
 {%endblock%}
-{%block fullContent%}
-{%endblock%}
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-xs-3">
-      {%block appPanel%}
+  <div class="jumbotron">
+      <div class="container text-center">
+        <h1>NOTHING</h1>
+        
+      </div>
+    </div>
 
-      {%endblock%}
-		</div>
-		<div class="col-xs-6">
-			{% block content %}
-
-
-			{%endblock%}
-		</div>
-		
-  	</div>
-  	<div class="row">
-  		<div class="col-xs-6">
-  			{%for error in errors%}
-  				<div class="error">{{error}}</div>
-  			{%endfor%}
-  		</div>
-  	</div>
-  	<div class="row">
-  		<div class="col-xs-6">
-  			{%for msg in messages%}
-  				<div class="error">{{msg}}</div>
-  			{%endfor%}
-  		</div>
-  	</div>
-</div>
-
-
+<footer class="footer">
+  <div class="row">
+    <div class="text-center">
+        No
+    </div>
+  </div>
+</footer>
 
 </body>
 </html>
