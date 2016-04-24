@@ -1,0 +1,27 @@
+{%extends "base.html"%}
+
+
+{%block nav%}
+{%include "nav.html"%}
+{%endblock%}
+
+
+{%block appPanel%}
+{%include "appPanel.html"%}
+{%endblock%}
+
+
+{%block content%}
+<div class="row">
+	<div class = "col-xs-12 text-center">
+{%if user.is_authenticated%}
+		{%block calendar%}
+		{%include "calendar.html"%}
+		{%endblock%}
+{%else%}
+		Welcome to Calendar With Stuff, a web-based calendar that allows you to add third-party apps to your calendar so you can track everything that matters to you.
+{%endif%}
+	</div>
+</div>
+
+{%endblock%}
