@@ -1,22 +1,17 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="{% url 'main' %}">Calendar With Stuff</a>
+      <a class="navbar-brand" href="{% url 'main' %}">A Display of Works</a>
     </div>
     <ul class="nav navbar-nav">
-	{% if not user.is_authenticated %}
-		<li><a href="{% url 'login' %}">Login</a></li>
-		<li><a href="{% url 'register' %}">Register</a></li>
-	{%else%}
-		<li><a href="{% url 'calendar' %}">My Calendar</a></li>
-		{%if user.userPointer.isDev%}
-			<li><a href="{% url 'devcenter' %}">Dev Center</a></li>
-		{%endif%}
-		<li><a href="{% url 'appstore' %}">App Store</a></li>
-		<li><a href="{% url 'editapp_settings' %}">Edit App Settings</a></li>
-		<li><a href="{% url 'profile'%}">Profile</a></li>
-		<li><a href="{% url 'logout' %}">Logout</a></li>
-	{%endif%}
+
+		<li><a href="{% url 'main' %}">button</a></li>
+
+		<li><a href="{% url 'main' %}">asdf button</a></li>
+
+		<li><a href="{% url 'main' %}">asdf button</a></li>
+		<li><a href="{% url 'main' %}">basrg</a></li>
+
     </ul>
   </div>
 </nav>
