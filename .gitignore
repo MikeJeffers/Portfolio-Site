@@ -63,3 +63,5 @@ target/
 media/
 
 *.sqlite3
+
+.idea/
