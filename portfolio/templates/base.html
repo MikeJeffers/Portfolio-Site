@@ -23,8 +23,18 @@
 <div class="container-fluid">
   <div class="row">
     <div class = "col-xs-12 text-center">
+    <script type="text/javascript">
+    window.setInterval(getNewImg, 5000);
+     function getNewImg(){
+        $.get("{% url 'get-image' %}", function(data){
+        console.log(data);
+        $("#image").attr("src", data.image);
+      });
+      }
 
-      <img src="{% static image%}"/>
+
+    </script>
+      <img id="image" src="{% static image%}"/>
 
     </div>
   </div>
