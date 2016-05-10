@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="{% static 'framework/js/masonry.min.js' %}"></script>
   <link rel="stylesheet" type="text/css" href="{% static "framework/css/main.css" %}">
 </head>
 <body>
@@ -16,16 +17,29 @@
 {%endblock%}
   <div class="jumbotron">
       <div class="container text-center">
-        <h1>NOTHING</h1>
+       
         
       </div>
     </div>
-<div class="container-fluid">
-  <div class="row">
-    <div class = "col-xs-12 text-center">
+
+
+
+    <div id="masonry-grid">
+
+      <div class="gutter-sizer"></div>
+
+      <div class="grid-item"></div>
+
+      <div class="grid-item"></div>
+
+      <div class="grid-item"></div>
+
+  </div>
+
+
     <script type="text/javascript">
     getNewImg();
-    window.setInterval(getNewImg, 5000);
+    window.setInterval(getNewImg, 10000);
      function getNewImg(){
         $.get("{% url 'get-image' %}", function(data){
         console.log(data);
@@ -33,10 +47,26 @@
       });
       }
 
+      var $container = jQuery('#masonry-grid');
+      // init Masonry
+     $container.masonry({
+        // options...
+        itemSelector: '.grid-item',
+        columnWidth: 80,
+        fitWidth: true
+      });
+      // layout Masonry after each image loads
+      $container.imagesLoaded().progress( function() {
+        $grid.masonry('layout');
+      });
+
 
     </script>
+  
+<div class="container-fluid">
+  <div class="row">
+    <div class = "col-xs-12 text-center">
       <img id="image" src="{% static image%}"/>
-
     </div>
   </div>
 </div>
