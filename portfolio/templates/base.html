@@ -24,6 +24,7 @@
   <div class="row">
     <div class = "col-xs-12 text-center">
     <script type="text/javascript">
+    getNewImg();
     window.setInterval(getNewImg, 5000);
      function getNewImg(){
         $.get("{% url 'get-image' %}", function(data){
