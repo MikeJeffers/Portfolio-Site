@@ -26,14 +26,17 @@
           columnWidth: '.grid-sizer',
           animate: true
       });
-      $container.on( 'click', 'img', function() {
-          var w = $(this).width();
+      $container.on( 'click', '.grid-item', function() {
+          var $target = $(this);
+          var w = $target.width();
+          $target.toggleClass('.grid-item--width2');
           if(w>500){
             w="300px";
           }else{
             w="600px";
           }
-          $(this).animate({width: w}, doMasonry());
+          $(this).children().animate({width: w});
+          $(this).animate({width: w}, doMasonry);
       });
 
         $container.imagesLoaded().progress( function(){
@@ -51,13 +54,12 @@
             $container.append( $wrap).masonry('appended', $wrap).masonry();
           }
         });
-
       }
 
       function doMasonry(){
-        $container.masonry('reload');
+        $container.masonry();
       }
-      //window.setInterval($container.masonry('layout'), 1000);
+      //window.setInterval(doMasonry, 1000);
     </script>
 
 </body>
