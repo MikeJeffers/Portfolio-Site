@@ -44,7 +44,7 @@
 
       getAllImgs();
       function getAllImgs(){
-        $.get("{% url 'get-all-images '%}",function(data){
+        $.get("{% url 'get-all-images' %}",function(data){
           for(vari=0;i<data.imageDict.length;i++){
             var domElement='<div class="grid-item"><img width="'+300+'"src="'+data.imageDict[i]+'"/></div>';
             var $wrap=$(domElement);
