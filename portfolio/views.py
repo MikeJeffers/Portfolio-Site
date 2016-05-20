@@ -1,15 +1,11 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 import boto3
-from botocore.client import Config
 import random
 import project.settings as settings
 
 
 # Create your views here.
-
-
-
 
 
 
