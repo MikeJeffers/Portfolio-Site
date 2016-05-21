@@ -6,8 +6,10 @@
 {%block content%}
 <div class="row">
 	<div class = "col-xs-12 text-center">
-
-		Welcome to nothing.
+    {%for i in years %}
+    <button type="button" class = "btn btn-secondary btn-lg" onclick="getYear({{i}})">Year{{i}}</button>
+    {%endfor%}
+    <br><br>
 
 	</div>
 </div>
@@ -31,37 +33,51 @@
       columnWidth:'.grid-sizer',
       animate:true
     });
+    $container.imagesLoaded().progress(function(){
+      $container.masonry();
+    });
     $container.on('click','.grid-item',function(){
         var $target = $(this);
         var w = $target.width();
+        var windowWidth = $container.width();
+        var fifth = (windowWidth/5);
+
         $target.toggleClass('.grid-item--width2');
-        if(w>500){
-          w="300px";
+        if(w>fifth+1){
+          w=fifth;
         }else{
-          w="600px";
+          w=fifth*2;
         }
         $(this).children().animate({width:w});
         $(this).animate({width:w},doMasonry);
-      });
-
-      $container.imagesLoaded().progress(function(){
-      $container.masonry();
     });
 
 
-      getAllImgs();
+      //getAllImgs();
       function getAllImgs(){
-        $.get("{% url 'get-all-projects' %}",function(data){
-          for(var i=0; i<data.imageDict.length; i++){
-            var domElement='<div class="grid-item"><img width="'+300+'"src="'+data.imageDict[i]+'"/></div>';
+        $.get("{% url 'get-all-projects' %}", onSuccess);
+      }
+      function getYear(year){
+        $( ".grid-item" ).remove();
+        console.log(year);
+        var url = '{% url "get-projects-by-year" 0 %}'.replace (0, year);
+        $.get(url,onSuccess);
+      }
+      function onSuccess(data){
+        var windowWidth = $container.width();
+        var fifth = (windowWidth/5);
+        for(var i=0; i<data.imageDict.length; i++){
+            var domElement='<div class="grid-item"><img width="'+fifth+'"src="'+data.imageDict[i]+'"/></div>';
             var $wrap=$(domElement);
             $container.append($wrap).masonry('appended',$wrap).masonry();
           }
-        });
       }
 
+
       function doMasonry(){
-        $container.masonry();
+        $container.imagesLoaded().progress(function(){
+          $container.masonry();
+        });
       }
 </script>
 

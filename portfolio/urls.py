@@ -13,4 +13,5 @@ urlpatterns = [
     url(r'^get-image/', views.getImage, name='get-image'),
     url(r'^get-all-images/', views.getAllImages, name='get-all-images'),
     url(r'^get-all-projects/', views.getAllProjects, name='get-all-projects'),
+    url(r'^get-projects-by-year/(?P<year>[0-5])', views.getProjectByYear, name='get-projects-by-year'),
 ]

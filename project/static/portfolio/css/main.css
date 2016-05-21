@@ -5,6 +5,11 @@
 	font-size: 14px;
 }
 
+body {
+  min-height: 2000px;
+  padding-top: 70px;
+}
+
 .error{
 	color: black;
 	font-style: italic;
