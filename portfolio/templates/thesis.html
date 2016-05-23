@@ -6,8 +6,8 @@
 {%block content%}
 <div class="row">
 	<div class = "col-xs-12 text-center">
-
-		Welcome to nothing.
+	<div class = "topic-button-panel"></div>
+	<br><br>
 
 	</div>
 </div>
@@ -15,13 +15,80 @@
 	<div class = "col-xs-12 text-center">
 
 		<div id="masonry-grid">
-    	<div class="grid-sizer">
-    		
-    	</div>
-   		</div>
+		<div class="grid-sizer">
+			
+		</div>
+		</div>
 
 	</div>
 </div>
+<script type="text/javascript">
+var $container=$('#masonry-grid');
+	$container.masonry({
+	  itemSelector:'.grid-item',
+	  percentPosition:true,
+	  columnWidth:'.grid-sizer',
+	  animate:true
+	});
+	$container.imagesLoaded().progress(function(){
+	  $container.masonry();
+	});
+	$container.on('click','.grid-item',function(){
+		var $target = $(this);
+		var w = $target.width();
+		var windowWidth = $container.width();
+		var fifth = (windowWidth/5);
+
+		$target.toggleClass('.grid-item--width2');
+		if(w>fifth+1){
+		  w=fifth;
+		}else{
+		  w=fifth*2;
+		}
+		$(this).children().animate({width:w});
+		$(this).animate({width:w},doMasonry);
+	});
+
+
+getTopics();
+
+function getTopics(){
+	$.get("{% url 'get-thesis-topics' %}", onTopicReturn);
+}
+
+function onTopicReturn(data){
+	console.log(data);
+	for (var i = data.topics.length - 1; i >= 0; i--) {
+		var topic = data.topics[i].toString();
+		var domButton = ' <button type="button" class="btn btn-secondary" onclick=getTopic("'+topic+'")>'+topic+'</button>' ;
+		$('.topic-button-panel').append(domButton);
+	}
+}
+
+function getTopic(topic){
+	$( ".grid-item" ).remove();
+	console.log(topic);
+	var url = '{% url "get-thesis-by-topic" 0 %}'.replace (0, topic);
+	$.get(url,onSuccess);
+}
+function onSuccess(data){
+	var windowWidth = $container.width();
+	var fifth = (windowWidth/5);
+	for(var i=0; i<data.imageDict.length; i++){
+		var domElement='<div class="grid-item"><img width="'+fifth+'"src="'+data.imageDict[i]+'"/></div>';
+		var $wrap=$(domElement);
+		$container.append($wrap).masonry('appended',$wrap).masonry();
+	}
+}
+
+
+function doMasonry(){
+	$container.imagesLoaded().progress(function(){
+		$container.masonry();
+	});
+}
+
+</script>
 
 
 {%endblock%}

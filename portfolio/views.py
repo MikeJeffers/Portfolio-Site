@@ -8,7 +8,6 @@ import project.settings as settings
 # Create your views here.
 
 
-
 def home(request):
     return render(request, 'main.html', {})
 
@@ -35,14 +34,12 @@ def getImage(request):
     sesh = boto3.session.Session(aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
                                  aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY)
     s3 = sesh.resource('s3')
-
     bucket = s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
 
     setOfImgUrls = []
     for obj in bucket.objects.all():
         if obj.key.find("tower") != -1 and ".db" not in obj.key:
             setOfImgUrls.append(obj.key)
-            print obj.key
 
     index = random.randint(0, len(setOfImgUrls) - 1)
     url = "https://" + settings.AWS_STORAGE_BUCKET_NAME + ".s3.amazonaws.com/" + setOfImgUrls[index]
@@ -69,14 +66,12 @@ def getAllProjects(request):
     sesh = boto3.session.Session(aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
                                  aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY)
     s3 = sesh.resource('s3')
-
     bucket = s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
-
 
     setOfImgUrls = []
     for obj in bucket.objects.filter(MaxKeys=3, Delimiter=".png"):
         if obj.key.find("year") != -1 and (".jpg" in obj.key or ".png" in obj.key):
-            print obj.key
+
             url = "https://" + settings.AWS_STORAGE_BUCKET_NAME + ".s3.amazonaws.com/" + obj.key
             setOfImgUrls.append(url)
 
@@ -86,15 +81,44 @@ def getProjectByYear(request, year=5):
     sesh = boto3.session.Session(aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
                                  aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY)
     s3 = sesh.resource('s3')
-
     bucket = s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
-
 
     setOfImgUrls = []
 
-    for obj in bucket.objects.filter(Prefix="portfolio/media/Year"+year):
+    for obj in bucket.objects.filter(Prefix="portfolio/media/Year"+year).limit(15):
         if obj.key.find("year") != -1 and (".jpg" in obj.key or ".png" in obj.key):
-            print obj.key
+            url = "https://" + settings.AWS_STORAGE_BUCKET_NAME + ".s3.amazonaws.com/" + obj.key
+            setOfImgUrls.append(url)
+            if len(setOfImgUrls)>25:
+                break
+
+    return JsonResponse({'imageDict': setOfImgUrls})
+
+def getThesisTopics(request):
+    sesh = boto3.session.Session(aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+                                 aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY)
+    s3 = sesh.resource('s3')
+    bucket = s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
+
+    topicSet = set()
+    for obj in bucket.objects.filter(Prefix="portfolio/media/THESIS_IMGS/"):
+        if obj.key.find(".db") == -1:
+            topicSet.add(obj.key.split('/')[3]) #adds subfolder name only
+
+    return JsonResponse({'topics': list(topicSet)})
+
+
+
+def getThesisTopic(request, topic):
+    sesh = boto3.session.Session(aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+                                 aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY)
+    s3 = sesh.resource('s3')
+    bucket = s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
+
+    setOfImgUrls = []
+
+    for obj in bucket.objects.filter(Prefix="portfolio/media/THESIS_IMGS/"+topic+"/"):
+        if ".jpg" in obj.key or ".png" in obj.key:
             url = "https://" + settings.AWS_STORAGE_BUCKET_NAME + ".s3.amazonaws.com/" + obj.key
             setOfImgUrls.append(url)
             if len(setOfImgUrls)>25:
