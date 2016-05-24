@@ -28,8 +28,15 @@ body {
 .grid-item { 
 	width: 20%; 
 }
+.grid-item img{ 
+	width: 100.5%; 
+}
 /* 2 columns wide */
 .grid-item--width2 { 
 	width: 40%; 
+}
+
+.grid-item--width2 img{ 
+	width: 100.5%; 
 }
 
