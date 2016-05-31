@@ -83,16 +83,16 @@ def getProjectByYear(request, year=5):
     s3 = sesh.resource('s3')
     bucket = s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
 
-    setOfImgUrls = []
+    setOfImgUrls = set()
 
     for obj in bucket.objects.filter(Prefix="portfolio/media/Year"+year).limit(15):
         if obj.key.find("year") != -1 and (".jpg" in obj.key or ".png" in obj.key):
             url = "https://" + settings.AWS_STORAGE_BUCKET_NAME + ".s3.amazonaws.com/" + obj.key
-            setOfImgUrls.append(url)
+            setOfImgUrls.add(url)
             if len(setOfImgUrls)>25:
                 break
 
-    return JsonResponse({'imageDict': setOfImgUrls})
+    return JsonResponse({'imageDict': list(setOfImgUrls)})
 
 def getThesisTopics(request):
     sesh = boto3.session.Session(aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
