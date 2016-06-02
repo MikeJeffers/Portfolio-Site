@@ -28,8 +28,10 @@ body {
 .grid-item { 
 	width: 20%; 
 }
+
 /* 2 columns wide */
 .grid-item--width2 { 
 	width: 40%; 
 }
+
 
