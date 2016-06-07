@@ -10,7 +10,6 @@ urlpatterns = [
     url(r'^cv$', views.cv, name='cv'),
     url(r'^code$', views.code, name='code'),
     url(r'^proj/(?P<id>[0-9]+)$', views.proj, name='project'),
-    url(r'^get-image/', views.getImage, name='get-image'),
     url(r'^get-all-images/', views.getAllImages, name='get-all-images'),
     url(r'^get-all-projects/', views.getAllProjects, name='get-all-projects'),
     url(r'^get-projects-by-year/(?P<year>[0-5])', views.getProjectByYear, name='get-projects-by-year'),
