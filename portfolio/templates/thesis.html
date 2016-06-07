@@ -4,6 +4,7 @@
 {%endblock%}
 
 {%block content%}
+
 <div class="row">
 	<div class = "col-xs-12 text-center">
 	<div class = "topic-button-panel"></div>
@@ -24,41 +25,8 @@
 </div>
 
 <script type="text/javascript">
-  (function($,sr){
-
-  // debouncing function from John Hann
-  // http://unscriptable.com/index.php/2009/03/20/debouncing-javascript-methods/
-  var debounce = function (func, threshold, execAsap) {
-      var timeout;
-
-      return function debounced () {
-          var obj = this, args = arguments;
-          function delayed () {
-              if (!execAsap)
-                  func.apply(obj, args);
-              timeout = null;
-          };
-
-          if (timeout)
-              clearTimeout(timeout);
-          else if (execAsap)
-              func.apply(obj, args);
-
-          timeout = setTimeout(delayed, threshold || 100);
-      };
-  }
-  // smartresize 
-  jQuery.fn[sr] = function(fn){  return fn ? this.bind('resize', debounce(fn)) : this.trigger(sr); };
-
-})(jQuery,'smartresize');
-
-
-</script>
-
-
-
-<script type="text/javascript">
 var numCols = 5;
+onResizeWindow();
 var $container=$('#masonry-grid');
 	$container.masonry({
 	  itemSelector:'.grid-item',
@@ -104,6 +72,7 @@ function getTopic(topic){
 	var url = '{% url "get-thesis-by-topic" 0 %}'.replace (0, topic);
 	$.get(url,onSuccess);
 }
+
 function onSuccess(data){
 	var windowWidth = $container.width();
 	var fifth = (windowWidth/numCols);
@@ -117,38 +86,63 @@ function onSuccess(data){
 
 
 function doMasonry(){
-      $container.imagesLoaded().progress(function(){
-      	  $container.masonry({
-          itemSelector:'.grid-item',
-          percentPosition:true,
-          columnWidth:'.grid-sizer',
-          animate:true
-        });
-      }).done(function(){
-        $container.masonry({
-          itemSelector:'.grid-item',
-          percentPosition:true,
-          columnWidth:'.grid-sizer',
-          animate:true
-        });
-      });
-    }
+  $container.imagesLoaded().progress(function(){
+      $container.masonry({
+      itemSelector:'.grid-item',
+      percentPosition:true,
+      columnWidth:'.grid-sizer',
+      animate:true
+    });
+  }).done(function(){
+    $container.masonry({
+      itemSelector:'.grid-item',
+      percentPosition:true,
+      columnWidth:'.grid-sizer',
+      animate:true
+    });
+  });
+}
 
 function resizeElements(){
-        var windowWidth = $container.width();
-        var w = (windowWidth/numCols);
-        $(this).children().animate({width:w});
-        $(this).animate({width:w});
-      }
+  var windowWidth = $container.width();
+  var w = (windowWidth/numCols);
+  $(this).children().animate({width:w});
+  $(this).animate({width:w});
+}
 
-      function onResizeWindow(){
-        if($container){
-          $(".grid-item").each(resizeElements);
-          doMasonry();
-        }
-      }
+function onResizeWindow(){
+  var navBarHeight = $(".navbar").height();
+  $("body").css("padding-top", navBarHeight+10);
+  console.log(navBarHeight);
+  if($container!=null){
+    $(".grid-item").each(resizeElements);
+    doMasonry();
+  }
+  randomScaleImage();
+}
 
-      $(window).smartresize(onResizeWindow);
+$(window).smartresize(onResizeWindow);
+
+window.setInterval(randomScaleImage, 10000);
+
+function randomScaleImage(){
+  var $domElements = $(".grid-item");
+  if($domElements!=null && $domElements.size()>0){
+    var randomIndex = Math.floor(Math.random()*$domElements.size());
+    var $target = $domElements.eq(randomIndex);
+    var w = $target.width();
+    var windowWidth = $container.width();
+    var fifth = (windowWidth/numCols);
+    $target.toggleClass('.grid-item--width2');
+    if(w>fifth+1){
+     w=fifth;
+    }else{
+     w=fifth*2;
+    }
+    $target.children().animate({width:w});
+    $target.animate({width:w},doMasonry);
+  }
+}
 
 
 </script>

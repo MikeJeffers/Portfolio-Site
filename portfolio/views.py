@@ -29,23 +29,6 @@ def research(request):
 def proj(request, id=0):
     return render(request, 'proj.html', {})
 
-
-def getImage(request):
-    sesh = boto3.session.Session(aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-                                 aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY)
-    s3 = sesh.resource('s3')
-    bucket = s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
-
-    setOfImgUrls = []
-    for obj in bucket.objects.all():
-        if obj.key.find("tower") != -1 and ".db" not in obj.key:
-            setOfImgUrls.append(obj.key)
-
-    index = random.randint(0, len(setOfImgUrls) - 1)
-    url = "https://" + settings.AWS_STORAGE_BUCKET_NAME + ".s3.amazonaws.com/" + setOfImgUrls[index]
-    return JsonResponse({'image': url})
-
-
 def getAllImages(request):
     sesh = boto3.session.Session(aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
                                  aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY)
@@ -85,14 +68,13 @@ def getProjectByYear(request, year=5):
 
     setOfImgUrls = set()
 
-    for obj in bucket.objects.filter(Prefix="portfolio/media/Year"+year).limit(15):
+    for obj in bucket.objects.filter(Prefix="portfolio/media/Year"+year).limit(25):
         if obj.key.find("year") != -1 and (".jpg" in obj.key or ".png" in obj.key):
             url = "https://" + settings.AWS_STORAGE_BUCKET_NAME + ".s3.amazonaws.com/" + obj.key
             setOfImgUrls.add(url)
-            if len(setOfImgUrls)>25:
-                break
-
-    return JsonResponse({'imageDict': list(setOfImgUrls)})
+    listOfUrls = list(setOfImgUrls)
+    random.shuffle(listOfUrls)
+    return JsonResponse({'imageDict': listOfUrls})
 
 def getThesisTopics(request):
     sesh = boto3.session.Session(aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
@@ -115,13 +97,12 @@ def getThesisTopic(request, topic):
     s3 = sesh.resource('s3')
     bucket = s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
 
-    setOfImgUrls = []
+    setOfImgUrls = set()
 
-    for obj in bucket.objects.filter(Prefix="portfolio/media/THESIS_IMGS/"+topic+"/"):
+    for obj in bucket.objects.filter(Prefix="portfolio/media/THESIS_IMGS/"+topic+"/").limit(25):
         if ".jpg" in obj.key or ".png" in obj.key:
             url = "https://" + settings.AWS_STORAGE_BUCKET_NAME + ".s3.amazonaws.com/" + obj.key
-            setOfImgUrls.append(url)
-            if len(setOfImgUrls)>25:
-                break
-
-    return JsonResponse({'imageDict': setOfImgUrls})
+            setOfImgUrls.add(url)
+    listOfUrls = list(setOfImgUrls)
+    random.shuffle(listOfUrls)
+    return JsonResponse({'imageDict': listOfUrls})
