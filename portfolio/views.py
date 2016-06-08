@@ -68,7 +68,7 @@ def getProjectByYear(request, year=5):
 
     setOfImgUrls = set()
 
-    for obj in bucket.objects.filter(Prefix="portfolio/media/Year"+year).limit(35):
+    for obj in bucket.objects.filter(Prefix="portfolio/media/Year"+year).limit(20):
         if obj.key.find("year") != -1 and (".jpg" in obj.key or ".png" in obj.key or ".gif" in obj.key):
             url = "https://" + settings.AWS_STORAGE_BUCKET_NAME + ".s3.amazonaws.com/" + obj.key
             setOfImgUrls.add(url)
