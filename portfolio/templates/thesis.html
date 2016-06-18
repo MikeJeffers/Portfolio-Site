@@ -25,7 +25,7 @@
 </div>
 
 <script type="text/javascript">
-var numCols = 5;
+var percentSize = 0.18;
 onResizeWindow();
 var $container=$('#masonry-grid');
 	$container.masonry({
@@ -36,18 +36,18 @@ var $container=$('#masonry-grid');
 	});
 	$container.on('click','.grid-item',function(){
 		var $target = $(this);
-        var w = $target.width();
-        var windowWidth = $container.width();
-        var fifth = (windowWidth/numCols);
+    var w = $target.width();
+    var windowWidth = $container.width();
+    var fifth = windowWidth*percentSize;
 
-        $target.toggleClass('.grid-item--width2');
-        if(w>fifth+1){
-          w=fifth;
-        }else{
-          w=fifth*2;
-        }
-        $(this).children().animate({width:w});
-        $(this).animate({width:w},doMasonry);
+    $target.toggleClass('.grid-item--width2');
+    if(w>fifth+1){
+      w=fifth;
+    }else{
+      w=fifth*2;
+    }
+    $(this).children().animate({width:w});
+    $(this).animate({width:w},doMasonry);
 	});
 
 
@@ -75,7 +75,7 @@ function getTopic(topic){
 
 function onSuccess(data){
 	var windowWidth = $container.width();
-	var fifth = (windowWidth/numCols);
+  var fifth = windowWidth*percentSize;
 	for(var i=0; i<data.imageDict.length; i++){
 		var domElement='<div class="grid-item"><img width="'+fifth+'"src="'+data.imageDict[i]+'"/></div>';
 		var $wrap=$(domElement);
@@ -105,7 +105,7 @@ function doMasonry(){
 
 function resizeElements(){
   var windowWidth = $container.width();
-  var w = (windowWidth/numCols);
+  var w = windowWidth*percentSize;
   $(this).children().animate({width:w});
   $(this).animate({width:w});
 }
@@ -132,7 +132,7 @@ function randomScaleImage(){
     var $target = $domElements.eq(randomIndex);
     var w = $target.width();
     var windowWidth = $container.width();
-    var fifth = (windowWidth/numCols);
+    var fifth = windowWidth*percentSize;
     $target.toggleClass('.grid-item--width2');
     if(w>fifth+1){
      w=fifth;

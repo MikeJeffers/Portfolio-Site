@@ -19,9 +19,6 @@ body {
 	font-style: italic;
 }
 
-/*changes!!!*/
-
-
 /* fluid 5 columns */
 .grid-sizer,
 .grid-item { 
@@ -30,7 +27,33 @@ body {
 
 /* 2 columns wide */
 .grid-item--width2 { 
-	width: 40%; 
+	width:40%;
 }
 
 
+.grid-item { 
+	width: 18%; 
+	border-style: solid;
+	border-width: 1px;
+	border-color: black;
+	border-radius: 5px;
+	-webkit-box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.55);
+	-moz-box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.55);
+	box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.55);
+	margin: 1%;
+	overflow: hidden;
+}
+
+/* 2 columns wide */
+.grid-item--width2 { 
+	overflow: hidden;
+	width: 38%; 
+	border-style: solid;
+	border-width: 1px;
+	border-color: black;
+	border-radius: 5px;
+	-webkit-box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.55);
+	-moz-box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.55);
+	box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.55);
+	margin: 1%;
+}
