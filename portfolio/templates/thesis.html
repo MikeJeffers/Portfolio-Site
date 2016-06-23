@@ -3,153 +3,61 @@
 {%include 'nav.html'%}
 {%endblock%}
 
+
 {%block content%}
 
+
 <div class="row">
 	<div class = "col-xs-12 text-center">
-	<div class = "topic-button-panel"></div>
-	<br><br>
+   <div class = "topic-button-panel"></div>
+   <br><br>
 
-	</div>
+ </div>
+</div>
+<div id="commentblock" class="row">
+  <div class = "col-xs-12 text-center">
+    <p class="comment">B.Arch Thesis work completed Spring 2013.<br> 
+    Team: <a href="http://www.jordanparsons.com">Jordan Parsons</a></p>
+  </div>
 </div>
 <div class="row">
 	<div class = "col-xs-12 text-center">
 
-		<div id="masonry-grid">
-		<div class="grid-sizer">
-			
-		</div>
-		</div>
+    <div id="masonry-grid">
+      <div class="grid-sizer">
 
-	</div>
+      </div>
+    </div>
+
+  </div>
 </div>
+{% load staticfiles %}
+<script src="{% static 'portfolio/js/common.js' %}"></script>
 
 <script type="text/javascript">
-var percentSize = 0.18;
-onResizeWindow();
-var $container=$('#masonry-grid');
-	$container.masonry({
-	  itemSelector:'.grid-item',
-	  percentPosition:true,
-	  columnWidth:'.grid-sizer',
-	  animate:true
-	});
-	$container.on('click','.grid-item',function(){
-		var $target = $(this);
-    var w = $target.width();
-    var windowWidth = $container.width();
-    var fifth = windowWidth*percentSize;
+  getTopics();
 
-    $target.toggleClass('.grid-item--width2');
-    if(w>fifth+1){
-      w=fifth;
-    }else{
-      w=fifth*2;
+  function getTopics(){
+    $.get("{% url 'get-thesis-topics' %}", onTopicReturn);
+  }
+
+  function onTopicReturn(data){
+    for (var i = data.topics.length - 1; i >= 0; i--) {
+      var topic = data.topics[i].toString();
+      var domButton = '<button type="button" class="btn btn-secondary" onclick=getTopic("'+topic+'")>'+topic+'</button>' ;
+      $('.topic-button-panel').append(domButton);
     }
-    $(this).children().animate({width:w});
-    $(this).animate({width:w},doMasonry);
-	});
-
-
-getTopics();
-
-function getTopics(){
-	$.get("{% url 'get-thesis-topics' %}", onTopicReturn);
-}
-
-function onTopicReturn(data){
-	console.log(data);
-	for (var i = data.topics.length - 1; i >= 0; i--) {
-		var topic = data.topics[i].toString();
-		var domButton = '<button type="button" class="btn btn-secondary" onclick=getTopic("'+topic+'")>'+topic+'</button>' ;
-		$('.topic-button-panel').append(domButton);
-    
-	}
-  var $bookButton = $('<a></a>').addClass("btn btn-primary").attr('href', "https://issuu.com/mikejeffers/docs/2015_1_21_v8_mj_jp_ugthesis");
-  $bookButton.text("THE BOOK");
+    var $bookButton = $('<a></a>').addClass("btn btn-primary").attr('href', "https://issuu.com/mikejeffers/docs/2015_1_21_v8_mj_jp_ugthesis");
+    $bookButton.text("THE BOOK");
     $('.topic-button-panel').append($bookButton);
-}
-
-function getTopic(topic){
-	$( ".grid-item" ).remove();
-	console.log(topic);
-	var url = '{% url "get-thesis-by-topic" 0 %}'.replace (0, topic);
-	$.get(url,onSuccess);
-}
-
-function onSuccess(data){
-	var windowWidth = $container.width();
-  var fifth = windowWidth*percentSize;
-	for(var i=0; i<data.imageDict.length; i++){
-		var domElement='<div class="grid-item"><img width="'+fifth+'"src="'+data.imageDict[i]+'"/></div>';
-		var $wrap=$(domElement);
-		$container.append($wrap).masonry('appended',$wrap).masonry();
-	}
-	doMasonry();
-}
-
-
-function doMasonry(){
-  $container.imagesLoaded().progress(function(){
-      $container.masonry({
-      itemSelector:'.grid-item',
-      percentPosition:true,
-      columnWidth:'.grid-sizer',
-      animate:true
-    });
-  }).done(function(){
-    $container.masonry({
-      itemSelector:'.grid-item',
-      percentPosition:true,
-      columnWidth:'.grid-sizer',
-      animate:true
-    });
-  });
-}
-
-function resizeElements(){
-  var windowWidth = $container.width();
-  var w = windowWidth*percentSize;
-  $(this).children().animate({width:w});
-  $(this).animate({width:w});
-}
-
-function onResizeWindow(){
-  var navBarHeight = $(".navbar").height();
-  $("body").css("padding-top", navBarHeight+10);
-  console.log(navBarHeight);
-  if($container!=null){
-    $(".grid-item").each(resizeElements);
-    doMasonry();
   }
-  randomScaleImage();
-}
 
-$(window).smartresize(onResizeWindow);
-
-window.setInterval(randomScaleImage, 10000);
-
-function randomScaleImage(){
-  var $domElements = $(".grid-item");
-  if($domElements!=null && $domElements.size()>0){
-    var randomIndex = Math.floor(Math.random()*$domElements.size());
-    var $target = $domElements.eq(randomIndex);
-    var w = $target.width();
-    var windowWidth = $container.width();
-    var fifth = windowWidth*percentSize;
-    $target.toggleClass('.grid-item--width2');
-    if(w>fifth+1){
-     w=fifth;
-    }else{
-     w=fifth*2;
-    }
-    $target.children().animate({width:w});
-    $target.animate({width:w},doMasonry);
+  function getTopic(topic){
+    $( ".grid-item" ).remove();
+    var url = '{% url "get-thesis-by-topic" 0 %}'.replace (0, topic);
+    $.get(url,onSuccess);
   }
-}
-
 
 </script>
-
 
 {%endblock%}
