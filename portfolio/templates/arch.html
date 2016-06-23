@@ -5,6 +5,7 @@
 
 {%block content%}
 
+
 <div class="row">
 	<div class = "col-xs-12 text-center">
     {%for i in years %}
@@ -25,127 +26,15 @@
 	</div>
 </div>
 
+{% load staticfiles %}
+<script src="{% static 'portfolio/js/common.js' %}"></script>
+
 <script type="text/javascript">
-var percentSize = 0.18;
-onResizeWindow();
-var $container=$('#masonry-grid');
-$container.masonry({
-  itemSelector:'.grid-item',
-  percentPosition:true,
-  columnWidth:'.grid-sizer',
-  animate:true
-});
-
-
-function doMasonry(){
-  $container.imagesLoaded().progress(function(){
-      $container.masonry({
-      itemSelector:'.grid-item',
-      percentPosition:true,
-      columnWidth:'.grid-sizer',
-      animate:true
-    });
-  }).done(function(){
-    $container.masonry({
-      itemSelector:'.grid-item',
-      percentPosition:true,
-      columnWidth:'.grid-sizer',
-      animate:true
-    });
-  });
+function getYear(year){
+  $( ".grid-item" ).remove();
+  var url = '{% url "get-projects-by-year" 0 %}'.replace (0, year);
+  $.get(url,onSuccess);
 }
-
-$container.on('click','.grid-item',function(){
-    var $target = $(this);
-    var w = $target.width();
-    var windowWidth = $container.width();
-    var fifth = windowWidth*percentSize;
-
-    $target.toggleClass('.grid-item--width2');
-    if(w>fifth+1){
-      w=fifth;
-    }else{
-      w=fifth*2;
-    }
-    $(this).children().animate({width:w});
-    $(this).animate({width:w},doMasonry);
-});
-
-  function getYear(year){
-    $( ".grid-item" ).remove();
-    var url = '{% url "get-projects-by-year" 0 %}'.replace (0, year);
-    $.get(url,onSuccess);
-  }
-  function onSuccess(data){
-    var windowWidth = $container.width();
-    var fifth = windowWidth*percentSize;
-    for(var i=0; i<data.imageDict.length; i++){
-        var domElement='<div class="grid-item"><img width="'+fifth+'"src="'+data.imageDict[i]+'"/></div>';
-        var $wrap=$(domElement);
-        $container.append($wrap).masonry('appended',$wrap).masonry();
-      }
-    doMasonry();
-  }
-
-function doMasonry(){
-  $container.imagesLoaded().progress(function(){
-      $container.masonry({
-      itemSelector:'.grid-item',
-      percentPosition:true,
-      columnWidth:'.grid-sizer',
-      animate:true
-    });
-  }).done(function(){
-    $container.masonry({
-      itemSelector:'.grid-item',
-      percentPosition:true,
-      columnWidth:'.grid-sizer',
-      animate:true
-    });
-  });
-}
-
-function resizeElements(){
-  var windowWidth = $container.width();
-  var w = windowWidth*percentSize;
-  $(this).children().animate({width:w});
-  $(this).animate({width:w});
-}
-
-function onResizeWindow(){
-  var navBarHeight = $(".navbar").height();
-  $("body").css("padding-top", navBarHeight+10);
-  console.log(navBarHeight);
-  if($container!=null){
-    $(".grid-item").each(resizeElements);
-    doMasonry();
-  }
-  randomScaleImage();
-}
-
-$(window).smartresize(onResizeWindow);
-
-window.setInterval(randomScaleImage, 10000);
-
-function randomScaleImage(){
-  var $domElements = $(".grid-item");
-  if($domElements!=null && $domElements.size()>0){
-    var randomIndex = Math.floor(Math.random()*$domElements.size());
-    var $target = $domElements.eq(randomIndex);
-    var w = $target.width();
-    var windowWidth = $container.width();
-    var fifth = windowWidth*percentSize;
-    $target.toggleClass('.grid-item--width2');
-    if(w>fifth+1){
-     w=fifth;
-    }else{
-     w=fifth*2;
-    }
-    $target.children().animate({width:w});
-    $target.animate({width:w},doMasonry);
-  }
-}
-
 
 </script>
 

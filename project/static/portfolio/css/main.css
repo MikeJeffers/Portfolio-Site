@@ -9,6 +9,10 @@ body {
   padding-top: 70px;
 }
 
+.btn{
+	margin: 5px;
+}
+
 .error{
 	color: black;
 	font-style: italic;
@@ -33,9 +37,7 @@ body {
 
 .grid-item { 
 	width: 18%; 
-	border-style: solid;
-	border-width: 1px;
-	border-color: black;
+	border: none;
 	border-radius: 5px;
 	-webkit-box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.55);
 	-moz-box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.55);
