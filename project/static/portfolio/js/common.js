@@ -15,10 +15,11 @@ $container.on('click','.grid-item',function(){
   var windowWidth = $container.width();
   var col = windowWidth*percentSize;
 
-  $target.toggleClass('.grid-item--width2');
-  if(w>col+1){
+  $target.removeClass('.grid-item--width2');
+  if(w>col*1.1){
     w=col;
   }else{
+    $target.addClass('.grid-item--width2');
     w=col*2;
   }
   $(this).children().animate({width:w});
@@ -57,14 +58,17 @@ function onSuccess(data){
 function resizeElements(){
   var windowWidth = $container.width();
   var w = windowWidth*percentSize;
-  $(this).children().animate({width:w});
-  $(this).animate({width:w});
+  console.log($(window).width());
+  console.log($container.width());
+  console.log(w);
+  $(this).removeClass('.grid-item--width2');
+  $(this).children().animate({width:w-3});
+  $(this).animate({width:w-3});
 }
 
 function onResizeWindow(){
   var navBarHeight = $(".navbar").height();
   $("body").css("padding-top", navBarHeight+10);
-  console.log(navBarHeight);
   if($container!=null){
     $(".grid-item").each(resizeElements);
     doMasonry();
@@ -81,15 +85,15 @@ function randomScaleImage(){
     var windowWidth = $container.width();
     var col = windowWidth*percentSize;
     $target.removeClass('.grid-item--width2');
-    if(w>col+1){
-     w=col;
-   }else{
-    $target.addClass('.grid-item--width2');
-     w=col*2;
-   }
-   $target.children().animate({width:w});
-   $target.animate({width:w},doMasonry);
- }
+    if(w>col*1.1){
+      w=col;
+    }else{
+      $target.addClass('.grid-item--width2');
+      w=col*2;
+    }
+    $target.children().animate({width:w});
+    $target.animate({width:w},doMasonry);
+  }
 }
 
 onResizeWindow();
