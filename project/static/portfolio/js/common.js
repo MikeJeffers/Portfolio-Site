@@ -80,10 +80,11 @@ function randomScaleImage(){
     var w = $target.width();
     var windowWidth = $container.width();
     var col = windowWidth*percentSize;
-    $target.toggleClass('.grid-item--width2');
+    $target.removeClass('.grid-item--width2');
     if(w>col+1){
      w=col;
    }else{
+    $target.addClass('.grid-item--width2');
      w=col*2;
    }
    $target.children().animate({width:w});
