@@ -58,9 +58,6 @@ function onSuccess(data){
 function resizeElements(){
   var windowWidth = $container.width();
   var w = windowWidth*percentSize;
-  console.log($(window).width());
-  console.log($container.width());
-  console.log(w);
   $(this).removeClass('.grid-item--width2');
   $(this).children().animate({width:w-3});
   $(this).animate({width:w-3});
@@ -77,7 +74,7 @@ function onResizeWindow(){
 }
 
 function randomScaleImage(){
-  var $domElements = $(".grid-item");
+  var $domElements = $(".grid-item, .grid-item--width2");
   if($domElements!=null && $domElements.size()>0){
     var randomIndex = Math.floor(Math.random()*$domElements.size());
     var $target = $domElements.eq(randomIndex);
