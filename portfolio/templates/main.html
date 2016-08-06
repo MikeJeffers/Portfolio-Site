@@ -4,29 +4,19 @@
 {%endblock%}
 
 {%block content%}
+<div id="splashimg" style="background-image: url('{{splashUrl}}')"></div>
+
 <div class="row">
 	<div class = "col-xs-12 text-center">
 
-		<h1 id="title">Terrible work by a terrible person</h1>
-		<h3>Just awful</h3>
+		<h1 id="title"></h1>
+		<h3 id="subtitle"></h3>
 
 	</div>
 </div>
 
 
-<script type="text/javascript">
-
-	function onResizeWindow(){
-	  	var navBarHeight = $(".navbar").height();
-	  	$("body").css("padding-top", navBarHeight+10);
-	  	console.log(navBarHeight);
-	}
-	onResizeWindow();
-	$(window).smartresize(onResizeWindow);
-
-</script>
-
-
-
+{% load staticfiles %}
+<script src="{% static 'portfolio/js/main-page.js' %}"></script>
 
 {%endblock%}

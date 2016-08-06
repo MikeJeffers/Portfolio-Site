@@ -9,7 +9,22 @@ import project.settings as settings
 
 
 def home(request):
-    return render(request, 'main.html', {})
+    sesh = boto3.session.Session(aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+                                 aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY)
+    s3 = sesh.resource('s3')
+    bucket = s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
+
+    setOfImgUrls = []
+
+    for obj in bucket.objects.filter(Prefix="portfolio/media/Splash/"):
+        if ".jpg" in obj.key or ".png" in obj.key:
+            url = "https://" + settings.AWS_STORAGE_BUCKET_NAME + ".s3.amazonaws.com/" + obj.key
+            setOfImgUrls.append(url)
+
+    index = random.randint(0, len(setOfImgUrls)-1)
+    imgUrl = setOfImgUrls[index]
+
+    return render(request, 'main.html', {'splashUrl': imgUrl})
 
 def cv(request):
     return redirect('https://www.linkedin.com/in/incarnated')
