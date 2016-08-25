@@ -22,7 +22,7 @@
 </div>
 <div class="row">
 	<div class = "col-xs-12 text-center">
-
+  <div class = "loading-figure"></div>
     <div id="masonry-grid">
       <div class="grid-sizer">
 
@@ -55,6 +55,7 @@
 
   function getTopic(topic){
     $( ".grid-item" ).remove();
+    beginLoad();
     var url = '{% url "get-thesis-by-topic" 0 %}'.replace (0, topic);
     $.get(url,onSuccess);
   }

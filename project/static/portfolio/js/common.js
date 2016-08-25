@@ -31,6 +31,14 @@ function loadingGifURL(url){
   LOADING_GIF = "url("+url+")";
 }
 
+function beginLoad(){
+  $(".loading-figure").css("background-image", LOADING_GIF).css("height", "40px");
+}
+
+function doneLoad(){
+  $(".loading-figure").css("background-image", "none").css("height", "0px");
+}
+
 function doSimpleMasonry(){
   $container.masonry({
     itemSelector:'.grid-item',
@@ -50,6 +58,7 @@ function doMasonry(){
         divLoaded(parent);
       }
     }
+    doneLoad();
     $container.masonry({
       itemSelector:'.grid-item',
       percentPosition:true,
@@ -64,12 +73,10 @@ function eachWrapper(index, element){
 }
 
 function loadingDiv(gridItem){
-  gridItem.css("background-image", LOADING_GIF);
   gridItem.children("img").css("opacity", "0");
 }
 
 function divLoaded(gridItem){
-  gridItem.css("background-image", "none");
   gridItem.addClass('z-depth');
   gridItem.children("img").css("opacity", "1");
 }

@@ -17,7 +17,7 @@
 </div>
 <div class="row">
 	<div class = "col-xs-12 text-center">
-
+  <div class = "loading-figure"></div>
 		<div id="masonry-grid">
     	<div class="grid-sizer">
     		
@@ -32,6 +32,7 @@
 <script type="text/javascript">
 loadingGifURL("{% static 'portfolio/media/loading_gif.gif' %}");
 function getYear(year){
+  beginLoad();
   $( ".grid-item" ).remove();
   var url = '{% url "get-projects-by-year" 0 %}'.replace (0, year);
   $.get(url,onSuccess);
