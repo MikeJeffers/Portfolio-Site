@@ -1,5 +1,6 @@
 var percentSize = 0.18;
-
+var doOnce = true;
+var LOADING_GIF = "";
 var $container=$('#masonry-grid');
 
 $container.masonry({
@@ -23,18 +24,32 @@ $container.on('click','.grid-item',function(){
     w=col*2;
   }
   $(this).children().animate({width:w});
-  $(this).animate({width:w},doMasonry);
+  $(this).animate({width:w},doSimpleMasonry);
 });
 
+function loadingGifURL(url){
+  LOADING_GIF = "url("+url+")";
+}
+
+function doSimpleMasonry(){
+  $container.masonry({
+    itemSelector:'.grid-item',
+    percentPosition:true,
+    columnWidth:'.grid-sizer',
+    animate:true
+  });
+}
+
 function doMasonry(){
-  $container.imagesLoaded().progress(function(){
-    $container.masonry({
-      itemSelector:'.grid-item',
-      percentPosition:true,
-      columnWidth:'.grid-sizer',
-      animate:true
-    });
-  }).done(function(){
+  $("div.grid-item").each(eachWrapper);
+  $container.imagesLoaded().done(function(instance){
+    if(Array.isArray(instance.images)){
+      for(let i=0; i<instance.images.length; i++){
+        var img = $(instance.images[i].img);
+        var parent = img.parent("div");
+        divLoaded(parent);
+      }
+    }
     $container.masonry({
       itemSelector:'.grid-item',
       percentPosition:true,
@@ -44,12 +59,28 @@ function doMasonry(){
   });
 }
 
+function eachWrapper(index, element){
+  loadingDiv($(element));
+}
+
+function loadingDiv(gridItem){
+  gridItem.css("background-image", LOADING_GIF);
+  gridItem.children("img").css("opacity", "0");
+}
+
+function divLoaded(gridItem){
+  gridItem.css("background-image", "none");
+  gridItem.addClass('z-depth');
+  gridItem.children("img").css("opacity", "1");
+}
+
 function onSuccess(data){
   var windowWidth = $container.width();
   var col = windowWidth*percentSize;
   for(var i=0; i<data.imageDict.length; i++){
     var domElement='<div class="grid-item"><img width="'+col+'"src="'+data.imageDict[i]+'"/></div>';
     var $wrap=$(domElement);
+    loadingDiv($wrap);
     $container.append($wrap).masonry('appended',$wrap).masonry();
   }
   doMasonry();
@@ -68,7 +99,7 @@ function onResizeWindow(){
   $("body").css("padding-top", navBarHeight+10);
   if($container!=null){
     $(".grid-item").each(resizeElements);
-    doMasonry();
+    doSimpleMasonry();
   }
   randomScaleImage();
 }
@@ -89,7 +120,7 @@ function randomScaleImage(){
       w=col*2;
     }
     $target.children().animate({width:w});
-    $target.animate({width:w},doMasonry);
+    $target.animate({width:w},doSimpleMasonry);
   }
 }
 

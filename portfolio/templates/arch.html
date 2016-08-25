@@ -30,6 +30,7 @@
 <script src="{% static 'portfolio/js/common.js' %}"></script>
 
 <script type="text/javascript">
+loadingGifURL("{% static 'portfolio/media/loading_gif.gif' %}");
 function getYear(year){
   $( ".grid-item" ).remove();
   var url = '{% url "get-projects-by-year" 0 %}'.replace (0, year);
