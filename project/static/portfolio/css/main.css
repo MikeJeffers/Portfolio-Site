@@ -43,6 +43,7 @@ body {
 	overflow: hidden;
 	background-repeat: no-repeat;
 	background-position: center;
+	min-height: 100px;
 }
 
 /* 2 columns wide */
