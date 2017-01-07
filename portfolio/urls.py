@@ -4,6 +4,7 @@ import views
 
 urlpatterns = [
     url(r'^$', views.home, name='main'),
+    url(r'^about$', views.about, name='about'),
     url(r'^arch$', views.arch, name='arch'),
     url(r'^thesis$', views.thesis, name='thesis'),
     url(r'^research$', views.research, name='research'),

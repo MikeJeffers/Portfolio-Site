@@ -1,0 +1,43 @@
+{%extends "base.html"%}
+{%block nav%}
+{%include 'nav.html'%}
+{%endblock%}
+
+{%block content%}
+
+
+
+<div class="row">
+  <div class = "col-xs-12">
+    <div class="row">
+      <div class="col-xs-6 text-left">
+        <div class="card z-depth">
+          <h3>About Me</h3>
+          --A work in progress--<br>
+          My background stretches from building Architecture to software architecture and everything in between.  <br><br>
+          This website is primarily to serve as a living document of that journey and convince others that it was not entirely fruitless. <br><br>
+          Credits:<br>
+          This website was built using Django, Bootstrap, Masonry.js, and the usual HTML/CSS/JS.
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-6 text-left">
+        <div class="card z-depth">
+          <h3>Contact and other links</h3>
+          <div class="list-group">
+            <a href="" class="list-group-item">Email: mike.s.jeffers (at) gmail.com</a>
+            <a href="https://www.linkedin.com/in/incarnated" class="list-group-item">LinkedIn</a>
+            <a href="https://github.com/MikeJeffers" class="list-group-item">Github</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% load staticfiles %}
+<script src="{% static 'portfolio/js/standard-page.js' %}"></script>
+
+
+{%endblock%}

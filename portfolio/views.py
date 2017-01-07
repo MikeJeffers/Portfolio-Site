@@ -35,6 +35,9 @@ def arch(request):
 def thesis(request):
     return render(request, 'thesis.html', {})
 
+def about(request):
+    return render(request, 'about.html', {})
+
 def code(request):
     return redirect('https://github.com/mikejeffers')
 

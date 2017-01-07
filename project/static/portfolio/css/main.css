@@ -66,6 +66,14 @@ body {
 	box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.55);
 }
 
+.card{
+	min-width: 200px;
+	border: none;
+	border-radius: 5px;
+	margin: 5%;
+	padding: 5%;
+}
+
 #title{
 	font-size: 25vmin;
 	mix-blend-mode: exclusion;
