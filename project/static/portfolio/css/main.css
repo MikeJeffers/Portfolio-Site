@@ -66,12 +66,18 @@ body {
 	box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.55);
 }
 
+.hover{
+	-webkit-box-shadow: 7px 7px 14px 0px rgba(0,0,0,0.55);
+	-moz-box-shadow: 7px 7px 14px 0px rgba(0,0,0,0.55);
+	box-shadow: 7px 7px 14px 0px rgba(0,0,0,0.55);
+}
+
 .card{
 	min-width: 200px;
 	border: none;
 	border-radius: 5px;
-	margin: 5%;
-	padding: 5%;
+	margin: 2%;
+	padding: 2%;
 }
 
 #title{

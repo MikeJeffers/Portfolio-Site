@@ -4,5 +4,12 @@ $("body").css("overflow", "none");
 function onResizeWindow(){
 	var navBarHeight = $(".navbar").height();
 	$("body").css("padding-top", navBarHeight+10);
-	console.log(navBarHeight);
 }
+
+$(".z-depth").hover(function() {
+		$(this).addClass("hover");
+	}, function() {
+		$(this).removeClass("hover");
+	}
+);
+

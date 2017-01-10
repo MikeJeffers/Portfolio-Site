@@ -27,7 +27,8 @@ def home(request):
     return render(request, 'main.html', {'splashUrl': imgUrl})
 
 def cv(request):
-    return redirect('https://www.linkedin.com/in/incarnated')
+    return render(request, 'cv.html', {})
+    #return redirect('https://www.linkedin.com/in/incarnated')
 
 def arch(request):
     return render(request, 'arch.html', {'years':[1, 2, 3, 4, 5]})
