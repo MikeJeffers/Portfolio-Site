@@ -135,4 +135,4 @@ onResizeWindow();
 
 $(window).smartresize(onResizeWindow);
 
-window.setInterval(randomScaleImage, 10000);
+window.setInterval(randomScaleImage, 20000);
