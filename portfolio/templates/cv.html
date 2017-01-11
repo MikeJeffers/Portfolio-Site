@@ -5,6 +5,8 @@
 
 {%block content%}
 
+
+
 <div class="row">
   <div class = "col-xs-12 text-center">
     <a class="btn btn-primary" href="https://www.linkedin.com/in/incarnated" role="button">LinkedIn</a>
@@ -12,9 +14,9 @@
 </div>
 
 <div class="row">
-  <div class="col-xs-5 text-left card z-depth">
-    <div class="">
-      <h3>Employment</h3>
+  <div class="col-xs-5 text-left card z-depth clickTarget">
+    <h3>Employment</h3>
+    <div class="collapse">
       <div class="col-12 card z-depth">
         <h4>CMU – Special Faculty Instructor</h4>
         <i>2016 – 2017</i>
@@ -73,9 +75,10 @@
       </div>
     </div>
   </div>
-  <div class="col-xs-5 text-left card z-depth">
-    
-      <h3>Education</h3>
+
+  <div class="col-xs-5 text-left card z-depth clickTarget">
+    <h3>Education</h3>
+    <div class="collapse">
       <div class="col-12 card z-depth">
       <h4>Degrees</h4>
       Carnegie Mellon University  2014 - 2017<br>
@@ -100,12 +103,14 @@
         15-637: Web Application Development<br>
       </div>
 
-
+    </div>
   </div>
 
 
-  <div class="col-xs-5 text-left card z-depth">    
-      <h3>Skills</h3>
+  <div class="col-xs-5 text-left card z-depth clickTarget">  
+
+    <h3>Skills</h3>
+    <div class="collapse">
       <div class="col-md-5 card z-depth">
         <h4>Programming</h4>
         <ul class="list-group">
@@ -151,10 +156,11 @@
           Lasercutter, CNC Mill, 3D printer, 6-axis Industrial Robotic Arm, 
           Full woodshop experience, Mill, Router, Table Saw, Band saw, Drill press, Vacuum Former, and hand tools.  
       </div>
+    </div>
   </div>
-  <div class="col-xs-5 text-left card z-depth">
-    
-      <h3>Contributions & Publications</h3>
+  <div class="col-xs-5 text-left card z-depth clickTarget">
+    <h3>Contributions & Publications</h3>
+    <div class="collapse">
       <div class="col-12 card z-depth">
         <h4>FreeCol – Open Source Contributor</h4>
         <p>Contributed to open-source project, developed and merged 2 feature requests.  Team project for 15-313 (CMU).  </p>
@@ -175,11 +181,19 @@
         <h4>[EN]Coding Architecture Publication</h4>
         <p>Thesis work and cover artwork included in conference publication.</p>
       </div>
+    </div>
   </div>
 </div>
 
 {% load staticfiles %}
 <script src="{% static 'portfolio/js/standard-page.js' %}"></script>
+
+<script type="text/javascript">
+$(".clickTarget").click(function(){
+  var target = $(this).children(".collapse")[0];
+  $(target).collapse('toggle');
+});
+</script>
 
 
 {%endblock%}
