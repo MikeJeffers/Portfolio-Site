@@ -45,7 +45,7 @@
   function onTopicReturn(data){
     for (var i = data.topics.length - 1; i >= 0; i--) {
       var topic = data.topics[i].toString();
-      var domButton = '<button type="button" class="btn btn-secondary" onclick=getTopic("'+topic+'")>'+topic+'</button>' ;
+      var domButton = '<button type="button" class="btn btn-secondary" onclick=getTopic("'+topic+'")>'+topic.replace("-", " ")+'</button>' ;
       $('.topic-button-panel').append(domButton);
     }
     var $bookButton = $('<a></a>').addClass("btn btn-primary").attr('href', "https://issuu.com/mikejeffers/docs/2015_1_21_v8_mj_jp_ugthesis");

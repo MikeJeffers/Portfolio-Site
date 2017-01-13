@@ -71,9 +71,9 @@ body {
 }
 
 .hover{
-	-webkit-box-shadow: 7px 7px 14px 0px rgba(0,0,0,0.55);
-	-moz-box-shadow: 7px 7px 14px 0px rgba(0,0,0,0.55);
-	box-shadow: 7px 7px 14px 0px rgba(0,0,0,0.55);
+	-webkit-box-shadow: 8px 8px 15px 1px rgba(0,0,0,0.55);
+	-moz-box-shadow: 8px 8px 15px 1px rgba(0,0,0,0.55);
+	box-shadow: 8px 8px 15px 1px rgba(0,0,0,0.55);
 }
 
 .card{
@@ -87,13 +87,13 @@ body {
 #title{
 	font-size: 25vmin;
 	mix-blend-mode: exclusion;
-	color: #DDDDDD;
+	color: #FFFFFF;
 }
 
 #subtitle{
 	font-size: 10vmin;
 	mix-blend-mode: exclusion;
-	color: #DDDDDD;
+	color: #FFFFFF;
 }
 
 #splashimg {
