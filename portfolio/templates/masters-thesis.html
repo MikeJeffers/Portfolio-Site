@@ -1,0 +1,40 @@
+{%extends "base.html"%}
+{%block nav%}
+{%include 'nav.html'%}
+{%endblock%}
+
+{%block content%}
+
+
+<div class="row">
+  <div class = "col-xs-12 text-center">
+    <a class="btn btn-primary" href="https://github.com/MikeJeffers/MSCD-Thesis" role="button">Github</a>
+  </div>
+</div>
+<div class="row">
+	<div class = "col-xs-12 text-center">
+  <div class = "loading-figure"></div>
+		<div id="masonry-grid">
+    	<div class="grid-sizer">
+    		
+    	</div>
+   		</div>
+	</div>
+</div>
+
+{% load staticfiles %}
+<script src="{% static 'portfolio/js/common.js' %}"></script>
+
+<script type="text/javascript">
+loadingGifURL("{% static 'portfolio/media/loading_gif.gif' %}");
+pullImgs();
+function pullImgs(year){
+  beginLoad();
+  $( ".grid-item" ).remove();
+  var url = '{% url "get-masters-images" %}';
+  $.get(url,onSuccess);
+}
+
+</script>
+
+{%endblock%}
