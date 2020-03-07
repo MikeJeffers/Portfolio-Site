@@ -14,20 +14,20 @@ def home(request):
     s3 = sesh.resource('s3')
     bucket = s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
 
-    setOfImgUrls = []
+    set_of_img_urls = []
 
     for obj in bucket.objects.filter(Prefix="portfolio/media/Splash/"):
         if isValidImgKey(obj.key):
             url = "https://" + settings.AWS_STORAGE_BUCKET_NAME + ".s3.amazonaws.com/" + obj.key
-            setOfImgUrls.append(url)
+            set_of_img_urls.append(url)
 
-    if len(setOfImgUrls) == 0:
+    if len(set_of_img_urls) == 0:
         return render(request, 'main.html', {'splashUrl': ''})
 
-    index = random.randint(0, len(setOfImgUrls) - 1)
-    imgUrl = setOfImgUrls[index]
+    index = random.randint(0, len(set_of_img_urls) - 1)
+    img_url = set_of_img_urls[index]
 
-    return render(request, 'main.html', {'splashUrl': imgUrl})
+    return render(request, 'main.html', {'splashUrl': img_url})
 
 
 def cv(request):
@@ -84,13 +84,13 @@ def getAllProjects(request):
     s3 = sesh.resource('s3')
     bucket = s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
 
-    setOfImgUrls = []
+    set_of_img_urls = []
     for obj in bucket.objects.filter(MaxKeys=3, Delimiter=".png"):
         if obj.key.find("year") != -1 and isValidImgKey(obj.key):
             url = "https://" + settings.AWS_STORAGE_BUCKET_NAME + ".s3.amazonaws.com/" + obj.key
-            setOfImgUrls.append(url)
-    setOfImgUrls = listMaxSize(setOfImgUrls)
-    return JsonResponse({'imageDict': setOfImgUrls})
+            set_of_img_urls.append(url)
+    set_of_img_urls = listMaxSize(set_of_img_urls)
+    return JsonResponse({'imageDict': set_of_img_urls})
 
 
 def getProjectByYear(request, year=5):
@@ -99,16 +99,16 @@ def getProjectByYear(request, year=5):
     s3 = sesh.resource('s3')
     bucket = s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
 
-    setOfImgUrls = set()
+    set_of_img_urls = set()
 
-    for obj in bucket.objects.filter(Prefix="portfolio/media/Year" + year).limit(40):
+    for obj in bucket.objects.filter(Prefix="portfolio/media/Year" + str(year)).limit(40):
         if obj.key.find("year") != -1 and isValidImgKey(obj.key):
             url = "https://" + settings.AWS_STORAGE_BUCKET_NAME + ".s3.amazonaws.com/" + obj.key
-            setOfImgUrls.add(url)
-    listOfUrls = list(setOfImgUrls)
-    random.shuffle(listOfUrls)
-    listOfUrls = listMaxSize(listOfUrls)
-    return JsonResponse({'imageDict': listOfUrls})
+            set_of_img_urls.add(url)
+    list_of_urls = list(set_of_img_urls)
+    random.shuffle(list_of_urls)
+    list_of_urls = listMaxSize(list_of_urls)
+    return JsonResponse({'imageDict': list_of_urls})
 
 
 def getThesisTopics(request):
@@ -117,12 +117,12 @@ def getThesisTopics(request):
     s3 = sesh.resource('s3')
     bucket = s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
 
-    topicSet = set()
+    topic_set = set()
     for obj in bucket.objects.filter(Prefix="portfolio/media/THESIS_IMGS/"):
         if obj.key.find(".db") == -1:
-            topicSet.add(obj.key.split('/')[3])  # adds subfolder name only
+            topic_set.add(obj.key.split('/')[3])  # adds subfolder name only
 
-    return JsonResponse({'topics': list(topicSet)})
+    return JsonResponse({'topics': list(topic_set)})
 
 
 def getThesisTopic(request, topic):
@@ -131,16 +131,16 @@ def getThesisTopic(request, topic):
     s3 = sesh.resource('s3')
     bucket = s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
 
-    setOfImgUrls = set()
+    set_of_img_urls = set()
 
     for obj in bucket.objects.filter(Prefix="portfolio/media/THESIS_IMGS/" + topic + "/").limit(40):
         if isValidImgKey(obj.key):
             url = "https://" + settings.AWS_STORAGE_BUCKET_NAME + ".s3.amazonaws.com/" + obj.key
-            setOfImgUrls.add(url)
-    listOfUrls = list(setOfImgUrls)
-    random.shuffle(listOfUrls)
-    listOfUrls = listMaxSize(listOfUrls)
-    return JsonResponse({'imageDict': listOfUrls})
+            set_of_img_urls.add(url)
+    list_of_urls = list(set_of_img_urls)
+    random.shuffle(list_of_urls)
+    list_of_urls = listMaxSize(list_of_urls)
+    return JsonResponse({'imageDict': list_of_urls})
 
 
 def getMastersImages(request):
@@ -149,16 +149,16 @@ def getMastersImages(request):
     s3 = sesh.resource('s3')
     bucket = s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
 
-    setOfImgUrls = set()
+    set_of_img_urls = set()
 
     for obj in bucket.objects.filter(Prefix="portfolio/media/MSCD_THESIS_IMGS/").limit(40):
         if isValidImgKey(obj.key):
             url = "https://" + settings.AWS_STORAGE_BUCKET_NAME + ".s3.amazonaws.com/" + obj.key
-            setOfImgUrls.add(url)
-    listOfUrls = list(setOfImgUrls)
-    random.shuffle(listOfUrls)
-    listOfUrls = listMaxSize(listOfUrls)
-    return JsonResponse({'imageDict': listOfUrls})
+            set_of_img_urls.add(url)
+    list_of_urls = list(set_of_img_urls)
+    random.shuffle(list_of_urls)
+    list_of_urls = listMaxSize(list_of_urls)
+    return JsonResponse({'imageDict': list_of_urls})
 
 
 def listMaxSize(collection, limit=MAX_IMGS_PER_PAGE):
@@ -169,7 +169,7 @@ def listMaxSize(collection, limit=MAX_IMGS_PER_PAGE):
 
 def isValidImgKey(url, formats=ACCEPTABLE_IMG_FILES):
     if len(formats) > 0:
-        for format in formats:
-            if format in url:
+        for frmt in formats:
+            if frmt in url:
                 return True
     return False

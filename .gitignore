@@ -64,4 +64,6 @@ media/
 
 *.sqlite3
 
+venv/
+
 .idea/
