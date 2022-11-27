@@ -4,8 +4,19 @@ import boto3
 import random
 import project.settings as settings
 
+from django.http import HttpResponse
+from django.views.decorators.http import require_GET
+
 ACCEPTABLE_IMG_FILES = ['.png', '.jpg', '.gif']
 MAX_IMGS_PER_PAGE = 15
+
+@require_GET
+def robots(request):
+    lines = [
+        "User-Agent: *",
+        "Disallow: /"
+    ]
+    return HttpResponse("\n".join(lines), content_type="text/plain")
 
 
 def home(request):

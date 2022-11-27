@@ -1,8 +1,9 @@
 
-from django.urls import include, re_path
+from django.urls import include, re_path, path
 import portfolio.views as views
 
 urlpatterns = [
+    #path("robots.txt", views.robots), #uncomment after crawlers pick up meta
     re_path(r'^$', views.home, name='main'),
     re_path(r'^about$', views.about, name='about'),
     re_path(r'^arch$', views.arch, name='arch'),
