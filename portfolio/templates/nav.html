@@ -2,16 +2,22 @@
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapse-target" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
       <a class="navbar-brand" href="{% url 'main' %}">Home</a>
     </div>
-    <ul class="nav navbar-nav">
-    <li><a href="{% url 'about' %}">About</a></li>
-		<li><a href="{% url 'arch' %}">Architecture</a></li>
-		<li><a href="{% url 'thesis' %}">Undergraduate Thesis</a></li>
-    <li><a href="{% url 'masters-thesis' %}"><b>Master's Thesis</b></a></li>
-		<li><a href="{% url 'code' %}">Code</a></li>
-		<li><a href="{% url 'research' %}">Research</a></li>
-		<li><a href="{% url 'cv' %}">CV</a></li>
+    <ul class="nav navbar-nav collapse navbar-collapse" id="collapse-target">
+      <li><a href="{% url 'about' %}">About</a></li>
+      <li><a href="{% url 'arch' %}">Architecture</a></li>
+      <li><a href="{% url 'thesis' %}">Undergraduate Thesis</a></li>
+      <li><a href="{% url 'masters-thesis' %}"><b>Master's Thesis</b></a></li>
+      <li><a href="{% url 'code' %}">Code</a></li>
+      <li><a href="{% url 'research' %}">Research</a></li>
+      <li><a href="{% url 'cv' %}">CV</a></li>
 
     </ul>
   </div>
